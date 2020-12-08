@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+<script>
+
+//Task 1
+//1.2
+	task1=prompt("Запишите любое предложение", "Любое предложение");
+	document.write('<h1 name="top">' + task1 + '<br></h1>');
+
+	task1_word = task1.split(" ");
+	document.write ('<h2>' + 'Количество слов: ' + task1_word.length + '</h2>');
+
+	var task1_letter = task1.split('');
+	task_1letter = 0;
+	var task1_marks = [' ',',','.'];
+	for (var i=0 ; i<task1_letter.length ; i++)
+	{
+		for (var j=0; j<task1_marks.length; j++)
+		{
+			if (task1_letter[i] == task1_marks[j])
+			{
+				task_1letter++;
+			}
+		}
+	}
+	task1_1letter = task1_letter.length-task_1letter;
+	document.write ('<h2 id="h2_id">Количество букв: </h2>')
+	h2_id = document.getElementById('h2_id');
+	h2_id.textContent += task1_1letter;
+
+//1.5	
+	document.write ('<h4>' + 'URL Адрес Документа: ' + document.URL + '</h4>');
+	document.write('<h4 id="h4_id"></h4>');
+	h4_id = document.getElementById('h4_id');
+	h4_id.innerHTML += 'Имя протокола: ';
+	h4_id.innerHTML += document.location.protocol;
+	h4_id.innerHTML += '<br>';
+	var task1_address = document.location.href.split('');
+	task1_name = '';
+	task1_domain = '';
+	task1_indexOfDomain = task1_address.lastIndexOf('.');
+
+	for (var k=task1_indexOfDomain ; k<task1_address.length ; k++)
+	{
+		task1_domain += task1_address [k];
+	}
+
+	for (var k=task1_indexOfDomain ; k>0 ; k--)
+	{
+		if (task1_address[k] == '/')
+		{
+			task1_indexname = k+1;
+			break;
+		}
+	}
+	for (var k=task1_indexname ; k<task1_indexOfDomain ; k++)
+	{
+		task1_name += task1_address [k];
+	}
+	h4_id.innerHTML += 'Имя файла: '
+	h4_id.innerHTML += task1_name;
+	h4_id.innerHTML += '<br>';
+	h4_id.innerHTML += 'Расширение файла: ';
+	h4_id.innerHTML += task1_domain;
+
+//1.6
+	task1_parameter = window.location.search;
+	task1_parameters = task1_parameter.substr(1);
+	task1_parametr = task1_parameters.split('&');
+	task1_param = new Object();
+	for (var k=0 ; k<task1_parametr.length ; k++)
+	{
+		task1_object = task1_parametr[k].split('=');
+		task1_property = task1_object [0];
+		task1_surname = task1_object [1];		
+		task1_param [task1_property] = task1_surname;
+	}
+//Task 2
+</script>
+
+
+<a class="task2_anchor" id="task2_anchor1">1 Анкор</a>
+<script>
+//2.1
+	document.write ("<a class='task2_anchor'><br>2 Анкор</br></a>");
+
+	let anchor = document.createElement('a');
+	anchor.innerHTML = "3 Анкор";
+	anchor.className = 'task2_anchor';
+	document.body.append(anchor);
+</script>
+
+<br></br>
+
+<a class='task2_a' href = "https://vk.com/fak1kondrashov24">VK <br></a>
+<script>
+//2.2
+	document.write ("<a class='task2_a' href = 'https://www.instagram.com/fak1kondrashov24/'>Instagram <br></a>");
+	let a = document.createElement('a');
+	a.href = 'https://isu.ifmo.ru/pls/apex/f?p=2143:PERSON:101117503251168::NO::PID:244050';
+	a.innerHTML = "ITMO (ISU)";
+	a.className = 'task2_a';
+	document.body.append(a);
+</script>
+
+<br></br>
+
+<img src="https://itmo.ru/file/news/4246/itmo_horiz_blue_eng.jpg" id='1ITMO' width=124 height=47px></img>
+<script>
+//2.3
+	document.write('<img src="https://itmo.ru/file/stat/482/slogans02.png" id="2University" width=142px height=55px></img>');
+
+	let img = document.createElement('img');
+	img.src = 'https://itmo.ru/file/news/4246/itmo_small_white_rus.jpg';
+	img.id = "3IFMO";
+	img.setAttribute ("width", '112px');
+	img.setAttribute ("height", '63px');
+	document.body.append(img);
+</script>
+
+<br></br>
+
+<script>
+	task2_href = document.getElementsByTagName('a');
+	task2_a = task2_href.length;
+
+	task2_anchors = 0;
+	task2_links = 0;
+
+	if (task2_a == 0) {
+		alert ("Анкоров нет!");
+	} else
+	{
+		for (var k=0 ; k<task2_a ; k++)
+		{
+			if (task2_href[k].hasAttribute('href'))
+			{
+				task2_links++;
+			}
+		}
+	}
+	task2_anchors = task2_a - task2_links;
+//2.4
+	document.write("<h3 id='task2_anchors'>Количество Анкоров: </h3>");
+	task2_anchor = document.getElementById('task2_anchors');
+	task2_anchor.textContent += task2_anchors;
+//2.5
+	document.write("<h3 id='task2_links'>Количество Ссылок: </h3>");
+	task2_link = document.getElementById('task2_links');
+	task2_link.textContent += task2_links;
+//2.6
+	document.write("<h3 id='task2_1anchor1'>Содержимое 1 анкора: </h3>")
+	task2_anchor1 = document.getElementById('task2_anchor1');
+	let task2_1anchor = task2_anchor1.innerHTML;
+	task2_1anchor1 = document.getElementById('task2_1anchor1');
+	task2_1anchor1.textContent += task2_1anchor;
+//2.7
+	document.write('<h3 id="task2_img">Количество изображений: </h3>');
+	var task2_img = document.getElementsByTagName('img').length;
+	task2_image = document.getElementById('task2_img');
+	task2_image.textContent += task2_img;
+//2.8
+	task2_img1 = document.getElementById('1ITMO');
+	var task2_width = task2_img1.width;
+	document.write('<h5 id="task2_img1">Ширина 1 картинки: </h5>');
+	task2_img1 = document.getElementById('task2_img1');
+	task2_img1.textContent += task2_width;
+	task2_img1.textContent += ' пикселей';
+//2.9	
+	let task2_maxWidth = 0;
+	let task2_height = 0;
+	var task2_images = document.getElementsByTagName('img');
+	for (var k=0 ; k<task2_images.length ; k++)
+	{
+		task2_height += task2_images[k].height;
+		if (task2_images[k].width > task2_maxWidth)
+		{
+			task2_maxWidth = task2_images[k].width;
+		}
+	}
+	document.write("<h5 id='task2_maxWidth'>Ширина самой широкой картинки: </h5>");
+//2.10	
+	task2_maxWidth_text = document.getElementById('task2_maxWidth');
+	task2_maxWidth_text.textContent += task2_maxWidth;
+	task2_maxWidth_text.textContent += ' пикселей';
+	document.write("<h5 id='task2_height'>Сумма всех высот картинок: </h5>");
+	task2_height_text = document.getElementById('task2_height');
+	task2_height_text.textContent += task2_height;
+	task2_height_text.textContent += ' пикселей';
+</script>
+
+
+<script>
+	//Task 3
+//3.1
+	for(var k=0 ; k<10 ; k++)
+	{
+		let form = document.createElement('form');
+		form.name = 'form' + (k+1);
+		form.id = k + 'form';
+		document.body.append(form);
+	}
+
+//3.2
+	var forms = document.getElementsByTagName('form');
+	document.write("<h6 id='task3_2names'>Имена четных форм: </h6>")
+	for (var k=0 ; k<forms.length ; k++)
+	{
+		if ((k+1)%2 == 0)
+		{
+			task3_2names.innerHTML += forms[k].name;
+			if(k!=forms.length-1) {
+			task3_2names.innerHTML += ', ';}
+		}
+	}
+
+//3.3
+	for (var k=0 ; k<forms.length ; k++)
+	{
+		let task3_text = document.createElement('input');
+		task3_text.type = 'text';
+		forms[k].appendChild(task3_text);
+		let task3_checkbox = document.createElement('input');
+		task3_checkbox.type = 'checkbox';
+		forms[k].appendChild(task3_checkbox);
+	}
+
+//3.4
+	function ButtonName() {
+		alert(this.name)
+	};
+	
+	for (var k=0 ; k<forms.length ; k++)
+	{
+		let task3_button1 = document.createElement('input');
+		task3_button1.type = 'button';
+		task3_button1.name = forms[k].name;
+		task3_button1.value = 'Показать имя формы';
+		task3_button1.addEventListener('click', ButtonName);
+		forms[k].appendChild(task3_button1);
+		Design (task3_button1);
+		task3_button1.style.backgroundImage = "url(images/1.png)";
+		
+		task3_button1.onmouseleave = function () {
+		this.style.backgroundColor = '#ccebff';
+	};
+	task3_button1.onmouseenter = function () {
+		this.style.backgroundColor = '#fff';
+	};
+	}
+
+//3.5
+	function BelongsTo() {
+		alert(this.parentElement.id)
+	};
+
+	for (var k=0 ; k<forms.length ; k++)
+	{
+		let task3_button2 = document.createElement('input');
+		task3_button2.type = 'button';
+		task3_button2.value = 'Принадлежность';
+		task3_button2.addEventListener('click', BelongsTo);
+		forms[k].appendChild(task3_button2);
+		Design (task3_button2);
+		task3_button2.style.backgroundImage = "url(images/2.png)";
+	
+	task3_button2.onmouseleave = function () {
+		this.style.backgroundColor = '#ccebff';
+	};
+	task3_button2.onmouseenter = function () {
+		this.style.backgroundColor = '#fff';
+	};
+}
+
+//3.6
+	function DeleteAll() {
+		this.parentElement.reset();
+	};
+
+	for (var k=0 ; k<forms.length ; k++)
+	{
+		let task3_button3 = document.createElement('input');
+		task3_button3.type = 'button';
+		task3_button3.value = 'Сбросить';
+		task3_button3.addEventListener('click', DeleteAll);
+		forms[k].appendChild(task3_button3);
+		Design(task3_button3);
+		task3_button3.style.backgroundImage = "url(images/3.png)";
+	
+task3_button3.onmouseleave = function () {
+		this.style.backgroundColor = '#ccebff';
+	};
+	task3_button3.onmouseenter = function () {
+		this.style.backgroundColor = '#fff';
+	};
+}
+
+//3.7
+	function FieldsAmount() {
+	alert(this.parentElement.getElementsByTagName('input').length-4);
+	};
+
+	for (var k=0 ; k<forms.length ; k++)
+	{
+		let task3_button4 = document.createElement('input');
+		task3_button4.type = 'button';
+		task3_button4.value = 'Показать количество полей';
+		task3_button4.addEventListener('click', FieldsAmount);
+		forms[k].appendChild(task3_button4);
+		Design(task3_button4);
+		task3_button4.style.backgroundImage = "url(images/4.png)";
+		
+	task3_button4.onmouseleave = function () {
+		this.style.backgroundColor = '#ccebff';
+	};
+	task3_button4.onmouseenter = function () {
+		this.style.backgroundColor = '#fff';
+	};
+}
+
+//3.8
+	function Design(task3_button)
+	{
+	task3_button.style.margin = '5px';
+	task3_button.style.padding = "15px 15px 15px 40px";
+	task3_button.style.background = '#ccebff';
+	task3_button.style.borderRadius='10px';
+	task3_button.style.backgroundPosition = "top 8px left 7px";
+	task3_button.style.backgroundRepeat = 'no-repeat';
+	task3_button.style.backgroundSize = '30px';
+}	
+</script>
+<style>p {display:inline;}</style>
+<script>
+	//Task4
+//4.1
+	function getRandom(min, max) {
+	return Math.floor(Math.random() * (max - min)) + min;
+	}
+	document.write("<p>10 разных ссылок: </p>");
+	for (var k=0 ; k<10 ; k++)
+	{
+		document.write ("<a class = 'task4_a'>Ссылка </a>");
+		task4_a = document.getElementsByClassName('task4_a');
+		var task4_name = getRandom(1,5);
+		task4_a[k].textContent += task4_name;
+		var task4_href = getRandom(100000, 300000);
+		task4_a[k].href = 'https://vk.com/id' + task4_href;
+		if (k!=9)
+		{
+			document.write('<p>, </p>');
+		} else {
+			document.write('<br>');
+		}
+	}
+	
+//4.2
+	task4_linksNumber = 0;
+	task4_tables = [['Количество ссылок','Адрес ссылок','Количество ссылок'],[],[],[]];
+	var task4_a = document.getElementsByClassName('task4_a');
+	
+	key = 0;
+	linksNumber = 0;
+	for (var k=0 ; k<task4_a.length; k++)
+	{
+	
+		task4_name = task4_a[k].innerHTML;
+		if (task4_tables[1].includes(task4_name) == false)
+		{
+			task4_tables[1][key] = task4_name;
+			key++;
+		}
+	}
+
+	for (var i=0 ; i<task4_tables[1].length ; i++)
+	{
+		for (var j=0 ; j<task4_a.length ; j++)
+		{
+		if (task4_a[j].textContent == task4_tables[1][i])
+			{
+				linksNumber ++;
+				task4_tables[2][i] += task4_a[j].href;
+				task4_tables[2][i] += ', ';
+			
+			}
+		}
+		task4_tables[3][i] = linksNumber;
+		linksNumber = 0;
+	}
+
+	for (var k=0 ; k<task4_tables[2].length ; k++)
+	{
+		task4_tables[2][k] = task4_tables[2][k].replace('undefined',' ');
+		task4_tables[2][k] = task4_tables[2][k].substring(0,task4_tables[2][k].length-2);
+	}
+
+
+	let task4_table = document.createElement('table');
+
+	let table_tr = document.createElement('tr');
+	task4_table.appendChild(table_tr);
+
+	for (var k=0 ; k<3 ; k++)
+	{
+		let td_head = document.createElement('td');
+		td_head.innerHTML = task4_tables[0][k];
+		td_head.align = 'center';
+		table_tr.appendChild(td_head);
+	}
+	for (var k=1 ; k<task4_tables[1].length ; k++)
+	{
+		let tr_table = document.createElement('tr');
+		task4_table.appendChild(tr_table);
+
+		let td_name = document.createElement('td');
+		td_name.innerHTML = task4_tables[1][k];
+		tr_table.appendChild(td_name);
+		
+		let td_href = document.createElement('td');
+		td_href.innerHTML = task4_tables[2][k];
+		tr_table.appendChild(td_href);
+
+		let td_number = document.createElement('td');
+		td_number.innerHTML = task4_tables[3][k];
+		td_number.align = 'center';
+		tr_table.appendChild(td_number);
+	}
+
+document.body.append(task4_table);
+
+</script>
+</body>
+</html>

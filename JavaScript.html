@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+<script>
+	myURL = prompt('Введите Ссылку','file:///C:/Users/User/Desktop/Web/Index.html');
+	
+	let myProtocol = ''; var indexOfProtocol;
+	let myDomainName = ''; var indexOfDomainName;
+	let myDomain = ''; var indexOfDomain;
+	let myPort = ''; var indexOfPort;
+	let myPath = ''; var indexOfPath;
+	let myFile = ''; var indexOfFile;
+	let myExtension = ''; var indexOfExtension;
+	let myErrors; let myParameter = '';
+
+	function Write(start, my, end)
+	{
+		for (var key=start+1 ; key<end ; key++)
+		{
+			my += myURL[key];
+		}
+		return my;
+	}
+
+	indexOfTheEnd = myURL.length-1;
+	indexOfProtocol = myURL.indexOf("//");
+	myProtocol = Write(-1, '', indexOfProtocol-1);
+	if(myProtocol !=  'file')
+	{
+		indexOfDomain = myURL.indexOf('/', indexOfProtocol+2);
+		indexOfDomainName = myURL.lastIndexOf('.', indexOfDomain);
+		myDomainName = Write (indexOfProtocol+1, '', indexOfDomainName);
+		indexOfPort = myURL.indexOf(':', indexOfDomainName);
+		if (indexOfPort == -1)
+		{
+			myDomain = Write (indexOfDomainName, '', indexOfDomain);
+			myPort += 'none';		
+		}
+		else
+		{
+			myDomain = Write (indexOfDomainName, '', indexOfPort);
+			myPort = Write (indexOfPort, '', indexOfDomain);
+		}
+	}
+	else
+	{
+		myDomain += 'none';
+		indexOfDomain = myURL.indexOf('//');
+		myDomainName += 'none';
+		indexOfDomainName = -1;
+		myPort += 'none';
+	}
+	indexOfPath = indexOfDomain;
+	indexOfPath1 = myURL.indexOf('/', indexOfPath+1);
+	control = 0;
+	while (indexOfPath1 != -1)
+	{
+		if (control == 0)
+		{
+			myPath = Write (indexOfPath, myPath, indexOfPath1);
+			control++;
+		}
+		else
+		{
+			myPath = Write (indexOfPath-1, myPath, indexOfPath1);
+		}
+		indexOfPath = indexOfPath1;
+		indexOfPath1 = myURL.indexOf('/', indexOfPath+1);
+	}
+	if (indexOfPath1 == -1)
+	{
+		indexOfParameter = myURL.lastIndexOf('?');
+		if (indexOfPath < indexOfParameter)
+		{
+			myPath = Write(indexOfPath, '', indexOfParameter);
+			myParameter = Write(indexOfParameter, '', indexOfTheEnd+1);
+			indexOfExtension = myURL.lastIndexOf('.');
+			if (indexOfExtension != indexOfDomainName)
+			{
+				indexOfFile = indexOfPath;
+				myFile = Write(indexOfFile, '', indexOfExtension);
+				myExtension = Write(indexOfExtension, '', indexOfParameter);
+			}			
+			else
+			{
+				myExtension += 'none';
+				myFile += 'none';
+			}
+		}
+		else
+		{
+			myParameter += 'none';
+			indexOfExtension = myURL.lastIndexOf('.');
+			if (indexOfExtension == indexOfDomainName)
+			{
+				myPath = Write(indexOfPath-1, myPath, indexOfTheEnd+1);
+				myExtension += 'none';
+				myFile += 'none';
+			}
+			else
+			{
+				indexOfFile = indexOfPath;
+				myPath = 'none';
+				myFile = Write(indexOfFile, '', indexOfExtension);
+				myExtension = Write(indexOfExtension, '', indexOfTheEnd+1);
+			}
+		}
+	}
+
+	if(myParameter != 'none')
+	{
+		var myParameters = [];
+		myParameters[0] = 0;
+		var myObjects = [];
+		col = 1;
+		key = 1;
+		for (k=0 ; k<myParameter.length ; k++)
+		{
+			if (myParameter[k] == '=')
+			{
+				myParameters[key] = k;
+				key++;
+			}	
+			if (myParameter[k] == '&')
+			{
+				myParameters[key] = k;
+				col++;
+				key++;
+			}
+		}
+		for (var j=0 ; j<key-1 ; j++)
+		{
+			i = myParameters[j+1]-myParameters[j];
+			if (i == 1)
+			{
+				myErrors += 'Нет значения параметра';
+			}
+		}
+		myParameters[key] = myParameter.length;
+		for(var i=0 ; i<col ; i++)
+		{
+			parameterValue = '';
+			parameterName = '';
+			for (j=myParameters[2*i] ; j<myParameters[2*i+2] ; j++)
+			{
+				if(j<myParameters[2*i+1])
+				{
+					if (myParameter[j] !='&') {
+					parameterName += myParameter[j]; }			
+				}
+				if (j>myParameters[2*i+1])
+				{
+					parameterValue += myParameter[j];
+				}
+			}
+			myObjects[i] = {
+				name: parameterName,
+				value: parameterValue,
+				type: 'Unknow'
+			}
+		}
+	}
+	if(myURL.includes('///') == true)
+	{
+		myErrors += 'Лишние слеши';
+	}
+	
+
+	let url = new Object();
+	url = {
+		protocol: myProtocol,
+		domainname: myDomainName,
+		domain: myDomain,
+		port: myPort,
+		parameters: myParameter,
+		path: myPath,
+		file: myFile,
+		extension: myExtension,
+		error: myErrors
+	}
+
+	// alert(myProtocol);
+	// alert(myDomainName);
+	// alert(myDomain);
+	// alert(myPort);
+	// alert(myParameter);
+	// alert(myPath);
+	// alert(myFile);
+	// alert(myExtension);
+	// alert(myErrors);
+
+	document.write ('<h7>' + 'URL Адрес: ' + myURL + '</h7>');
+	document.write('<p>' + 'Protocol: ' + url.protocol + '</p>');
+	document.write('<p>' + 'DomainName: ' + url.domainname + '</p>');
+	document.write('<p>' + 'Domain: ' + url.domain + '</p>');
+	document.write('<p>' + 'Port: ' + url.port + '</p>');
+	document.write('<p>' + 'Parameter: ' + url.parameters + '</p>');
+	document.write('<p>' + 'Path: ' + url.path + '</p>');
+	document.write('<p>' + 'File: ' + url.file + '</p>');
+	document.write('<p>' + 'Extension: ' + url.extension + '</p>');
+	document.write('<p>' + 'Errors: ' + url.error + '</p>');
+	document.write('<p>' + '*Если строка Параметров заполнена, объект с ними разложен в таблице ниже' + '</p>');
+
+	let table = document.createElement('table');
+	let table_tr = document.createElement('tr');
+	table.appendChild(table_tr);
+	var tables = ['Param','Name','Value','Type'];
+	for (var k = 0 ; k <= 3 ; k ++)
+	{
+		let td_head = document.createElement('td');
+		td_head.innerHTML = tables[k];
+		td_head.align = 'center';
+		table_tr.appendChild(td_head); 
+	}
+	for (var k=0 ; k<col ; k++)
+	{
+		let tr_table = document.createElement('tr');
+		table.appendChild(tr_table);
+
+		let td_param = document.createElement('td');
+		td_param.innerHTML = k+1;
+		tr_table.appendChild(td_param);
+
+		let td_name = document.createElement('td');
+		td_name.innerHTML = myObjects[k].name;
+		tr_table.appendChild(td_name);
+
+		let td_value = document.createElement('td');
+		td_value.innerHTML = myObjects[k].value;
+		td_value.align = 'center';
+		tr_table.appendChild(td_value);
+
+		let td_type = document.createElement('td');
+		td_type.innerHTML = myObjects[k].type;
+		tr_table.appendChild(td_type);
+	}
+	document.body.append(table);
+
+</script>
+</body>
+</html>

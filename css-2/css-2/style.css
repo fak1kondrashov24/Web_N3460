@@ -1,0 +1,76 @@
+body {
+	background-size: 1448px 2653px;
+	width: 1448px;
+	margin: 0px;
+	height: 2653px;
+	background: linear-gradient(to bottom right, #1E2434, #3B4E6F);
+}
+
+.content {
+	margin-bottom: 120px;
+}
+
+.writer-img {
+	margin: 85px 0px 0px 80px;
+	height: 115px;
+	width: 115px;
+	float: left;
+}
+
+.byline {
+	text-transform: uppercase;	
+	font-family: "Arial";
+	color: #86889D;
+	font-size: 25px;
+	padding: 120px 0 0 220px;
+}
+
+h1 {
+	width: 900px;
+	color: white;
+	font-size: 63px;
+	text-align: center;
+	margin: 175px 0px 40px 0px;
+	padding: 0px 125px 0px 125px;
+}
+
+h2 {
+	color: #89919C;
+	font-size: 39px;
+	margin: 40px 600px 0px 82px;
+	padding: 0px 120px 70px 0px;
+	border-width: 0px 0px 2px 0px;
+	border-style: solid;
+	border-color: #89919C;
+}
+
+.content p {
+	color: white;	
+	font-size: 30px;
+	font-family: "Arial";
+	font-weight: bold;
+	margin: 50px 416px 0px 82px;
+}
+
+.image {
+	height: 675px;
+	background-size: 1448px 675px;
+	background-image: url(images/soccer.jpeg)
+	position: relative;
+}
+
+.caption {
+	opacity: 0.75;
+	height: 110px;
+	width: 710px;
+	font-size: 25px;
+	font-weight: bold;
+	font-style: italic;
+	position: absolute;
+	padding-top: 35px;
+	margin: 505px 0 0 40px;
+	padding-left: 20px;
+	justify-content: center;
+	background-color: white;
+	font-family: "Times New Roman";
+}

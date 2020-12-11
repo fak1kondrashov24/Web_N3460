@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src = "https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+</html>
+
+<body>
+	<div id='Table'>
+	<form>
+		<p>Задайте размеры таблицы:</p>
+		<table>
+			<tr>
+				<td><label for = 'tr_col'>Количество строк: </label> </td>
+				<td><input type='number' id='tr_col' name='tr_col' min='1' value = '2' max='10'></td>
+			</tr>
+			<tr>
+				<td><label for = 'td_col'>Количество столбцов: </label></td>
+				<td><input type='number' id='td_col' name='td_col' min='1' value = '4' max='10'></td>	
+			</tr>
+		</table>
+		<br>
+		<input type='button' value='Применить' onClick='tbl_btn()'></input>
+	</form>
+	</div>
+
+	<script>
+	//Task_2
+		function tbl_btn() {
+			let tbl = document.createElement('table');
+			td_col = document.getElementById('td_col').value;
+			tr_col = document.getElementById('tr_col').value;
+			tbl.id = 'tbl';
+
+			if (td_col>10 || tr_col>10 || td_col<0 || tr_col<0)
+			{
+				alert("Количество строк/столбцов должно быть между 1 и 10");
+				return;
+			}
+
+			for (let j=0 ; j<tr_col ; j++)
+			{
+				let tr_tbl = document.createElement('tr');
+				tr_tbl.id = j+1;
+				tbl.appendChild(tr_tbl);
+
+				index = j+1;
+				let tbl_td = document.createElement('td');
+				tbl_td.innerHTML = '<p>' + index + '</p>';
+				tr_tbl.appendChild(tbl_td);
+
+				for (let i=0 ; i<td_col ; i++)
+				{
+					ii = (i+1).toString();
+					jj = (j+1).toString();
+					kk = jj + ii;
+					key_txt = 'txt' + kk;
+					key_tbl = 'tbl' + kk;
+					key_frm = 'frm' + kk;
+					let td_tbl = document.createElement('td');
+					td_tbl.setAttribute('id', key_tbl);
+					td_tbl.innerHTML = tbl_txt(key_frm, key_txt, kk);
+					tr_tbl.appendChild(td_tbl);
+				}
+			}
+			$('#Table').css('display','none');
+			//$('#Table').hide();
+			//$('#table').attr('hidden','true');
+
+			document.write('<div id="fnc_functions" style="display: inline;">');
+			document.write('<div id="fnc_change" style="float: left"> </div>');
+			document.write('<div id="fnc_tittle" style="float: left"> </div>');
+			document.write('<div id="fnc_remove" style="float: left"> </div>');
+			document.write('<div id="fnc_random" style="float: left"> </div>');
+			document.write('<div id="fnc_delete" style="float: left"> </div>');
+			document.write('</div>');
+
+			type_style = 'style';
+			type_border = 'border';
+
+			fnc_change = document.getElementById('fnc_change');
+			fnc_change.innerHTML = "<form><input type='number' id='change_width' maxLength='3' min='1' max='999' onChange='change_function(this, type_border)'><br><select id='change_border' onChange='change_function(this, type_style)'><option></option><option value='solid'>Сплошная Линия</option><option value='dotted'>Тире</option><option value='dashed'>Точки</option><option value='double'>Двойная</option><option value='inset'>Тень Внутри</option><option value='outset'>Тень Снаружи</option><option value='groove'>Половина Внутри</option><option value='ridge'>Половина Снаружи</option></select></br><input type='button' id='changed_button' onClick='myChange()' value='Применить'></form>";
+
+			fnc_title = document.getElementById('fnc_tittle');
+			fnc_title.innerHTML = "<form><input type='text' id='title_text' value='Заголовок'></br><input type='button' onClick='myTittle()' value='Добавить'></form>";
+
+			fnc_remove = document.getElementById('fnc_remove');
+			fnc_remove.innerHTML = "<form><input type='number' id='remove_stroka'><br><input type='button' onClick='myRemove()' value='Удалить'></form>";
+
+			fnc_random = document.getElementById('fnc_random');
+			fnc_random.innerHTML = "<form><button type='button' onClick='myRandom()'>Magic</button></form>"
+
+			fnc_delete = document.getElementById('fnc_delete');
+			fnc_delete.innerHTML = "<button onClick='myDelete()'>Удалить таблицу</button>"
+
+			document.body.append(tbl);
+		}
+
+		function txt_btn(k) {
+			txt_key = 'txt' + k;
+			tbl_key = 'tbl' + k;
+			frm_key = 'frm' + k;
+			btn = document.getElementById(txt_key);
+			frm = document.getElementById(frm_key);
+			btn_txt = document.getElementById(tbl_key);			
+			txt = btn.value;
+			$('#frm').attr('hidden','true');
+			btn_txt.innerHTML = "<p>" + txt + "</p>";
+		}
+
+		function tbl_txt(key_frm, key_txt, kk) {
+			let text = "<form id = '" + key_frm + "'><input type='text' id = '" + key_txt + "'><br><input type='button' value='Сохранить' onClick='txt_btn(" + kk + ")'></form>";
+			return text;
+		}
+
+		function change_function(This, type)
+		{
+			changed_value = This.value;
+			change_button = document.getElementById('changed_button');
+			change_value = change_button.value;
+			let finish; let start;
+
+			if (type =='style')
+			{
+				if (change_value.includes('px') != true)
+				{
+					if (change_value.includes(' ') == true)
+					{
+						start = change_value.indexOf(' ');
+						finish = change_value.length;
+						change_button.value = change_value.replace(change_value.substring(start+1, finish), changed_value);
+					}
+					else
+					{
+						change_button.value += ' ' + changed_value;
+					}
+				}
+				else
+				{
+					if (change_value.includes(' и ') == true)
+					{
+						start = change_value.indexOf(" и ");
+						finish = change_value.length;
+						change_button.value = change_value.replace(change_value.substring(start+3,finish), changed_value);
+					}
+					else
+					{
+						change_button.value += ' и ' + changed_value;
+					}
+				}
+			}
+			if (type =='border')
+			{	
+				if (change_value.includes('px') != false)
+				{
+					start = change_value.indexOf(' ');
+					finish = change_value.indexOf('px');
+					change_button.value = change_value.replace(change_value.substring(start+1, finish-1), changed_value);
+				}
+				else
+				{
+					if (change_value.includes(' ') == false)
+					{
+						change_button.value += ' ' + changed_value + ' px';;
+					}
+					else
+					{
+						myIndex = change_value.lastIndexOf(' ');
+						start = change_value.substring(0, myIndex);
+						finish = change_value.substring(myIndex);
+						change_button.value =  start + ' ' + changed_value + ' px и' + finish;
+					}
+				}				
+			}
+		}		
+
+		function myChange() {
+			width = $('#change_width').val();
+			border = $('#change_border').val();
+			if (width<1 || width>999)
+			{
+				alert('Введите трехзначное число (но такое, чтобы были видны изменения)');
+				return;
+			}
+			$('td').attr('width', width);
+			$('#tbl').css('border-style', border);
+		}
+
+		function myTittle() {
+			title_text = $('#title_text').val();
+			$('#tbl').prepend('<caption>' + title_text + '</caption>');
+		}
+
+		function myRemove() {
+			remove_stroka = $('#remove_stroka').val();
+			if($('td').is('#'+ remove_stroka) == false)
+			{
+				alert('Введено неверное число: данной строки не существует');
+				return;
+			}
+			$("#"+ remove_stroka).remove();
+		}
+
+		function myRandom() {
+			col_td = $('#tbl td').length;
+			col_tr = $('#tbl tr').length;
+			col_td = col_td/col_tr;
+			rnd_tr = getRandomInt(1,col_tr);
+			rnd_td = getRandomInt(1,col_td);
+			tr_rnd = rnd_tr.toString();
+			td_rnd = rnd_td.toString();
+			rnd_tbl = tr_rnd + td_rnd;
+			tbl_rnd = '#'+'tbl'+ rnd_tbl;
+
+			text_color = getRandomColor();
+			color = getRandomColor();
+			$(tbl_rnd).css('background-color', color);
+			$(tbl_rnd).css('color', text_color);
+
+			text = getRandomInt(15,25);
+			if (text == 25)
+			{
+				key_frm = 'frm'+ rnd_tbl;
+				key_txt = 'txt'+ rnd_tbl;
+				kk = rnd_tbl;
+				txt_tbl = tbl_txt(key_frm, key_txt, kk);
+				$(tbl_rnd).html(txt_tbl);			
+			}
+			else
+			{
+				font_size = text +"px";
+				$(tbl_rnd).css('font-size', font_size);				
+			}
+
+		}
+
+		function myDelete() {
+			$('#tbl').remove();
+			//$('#Table').show();
+			alert(kk);
+			//$('#Table').attr('hidden','false')
+			$('#fnc_functions').attr('hidden','true');
+		}
+
+		function getRandomInt(min,max) {
+			return Math.floor(Math.random()*(max+1-min))+min;
+		}
+
+		function getRandomColor() {
+			color = Math.round(255.0*Math.random());
+			r = color.toString(16);
+			color = Math.round(255.0*Math.random());
+			g = color.toString(16);
+			color = Math.round(255.0*Math.random());
+			b = color.toString(16);
+			color = "#" + r+g+b;
+			return color;
+		}
+	</script>
+
+</body>
+
+<style>
+	#Table {
+		position: fixed;
+		top: 50%;
+		margin-top: - 50%;
+		left: 50%;
+		margin-left: - 50%;
+		text-align: center;
+	}
+</style>

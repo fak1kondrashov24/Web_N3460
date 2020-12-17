@@ -8,47 +8,44 @@
 <body>
 	<div id='Table'>
 	<form>
-		<p>Задайте размеры таблицы:</p>
+		<h1>Задайте размеры таблицы:</h1>
 		<table>
 			<tr>
-				<td><label for = 'tr_col'>Количество строк: </label> </td>
-				<td><input type='number' id='tr_col' name='tr_col' min='1' value = '2' max='10'></td>
+				<td class='col'><label for = 'tr_col'>Количество строк: </label> </td>
+				<td><input type='number' id='tr_col' class='num' name='tr_col' min='1' value = '3' max='10'></td>
 			</tr>
 			<tr>
-				<td><label for = 'td_col'>Количество столбцов: </label></td>
-				<td><input type='number' id='td_col' name='td_col' min='1' value = '4' max='10'></td>	
+				<td class='col'><label for = 'td_col'>Количество столбцов: </label></td>
+				<td><input type='number' id='td_col' class='num' name='td_col' min='1' value = '6' max='10'></td>	
 			</tr>
 		</table>
 		<br>
-		<input type='button' value='Применить' onClick='tbl_btn()'></input>
+		<input type='button'  id='Table_button'value='Применить' onClick='tbl_btn()'></input>
 	</form>
 	</div>
 
 	<script>
-	//Task_2
+
 		function tbl_btn() {
 			let tbl = document.createElement('table');
 			td_col = document.getElementById('td_col').value;
 			tr_col = document.getElementById('tr_col').value;
 			tbl.id = 'tbl';
-
-			if (td_col>10 || tr_col>10 || td_col<0 || tr_col<0)
+			if (td_col>10 || tr_col>10 || td_col<1 || tr_col<1)
 			{
 				alert("Количество строк/столбцов должно быть между 1 и 10");
 				return;
 			}
-
 			for (let j=0 ; j<tr_col ; j++)
 			{
 				let tr_tbl = document.createElement('tr');
-				tr_tbl.id = j+1;
-				tbl.appendChild(tr_tbl);
-
 				index = j+1;
+				tbl.appendChild(tr_tbl);
+				tr_tbl.id = index;
 				let tbl_td = document.createElement('td');
 				tbl_td.innerHTML = '<p>' + index + '</p>';
+				tbl_td.setAttribute('class','td_num');
 				tr_tbl.appendChild(tbl_td);
-
 				for (let i=0 ; i<td_col ; i++)
 				{
 					ii = (i+1).toString();
@@ -59,41 +56,84 @@
 					key_frm = 'frm' + kk;
 					let td_tbl = document.createElement('td');
 					td_tbl.setAttribute('id', key_tbl);
+					td_tbl.setAttribute('class','num_td');
 					td_tbl.innerHTML = tbl_txt(key_frm, key_txt, kk);
 					tr_tbl.appendChild(td_tbl);
 				}
 			}
 			$('#Table').css('display','none');
-			//$('#Table').hide();
-			//$('#table').attr('hidden','true');
 
-			document.write('<div id="fnc_functions" style="display: inline;">');
-			document.write('<div id="fnc_change" style="float: left"> </div>');
-			document.write('<div id="fnc_tittle" style="float: left"> </div>');
-			document.write('<div id="fnc_remove" style="float: left"> </div>');
-			document.write('<div id="fnc_random" style="float: left"> </div>');
-			document.write('<div id="fnc_delete" style="float: left"> </div>');
-			document.write('</div>');
+			document.write('<table id="fnc_functions"><tr>');
+			document.write('<td id="fnc_change"> </td>');
+			document.write('<td id="fnc_tittle"> </td>');
+			document.write('<td id="fnc_remove"> </td>');
+			document.write('<td id="fnc_random"> </td>');
+			document.write('<td id="fnc_delete"> </td>');
+			document.write('</tr></table>');
 
 			type_style = 'style';
 			type_border = 'border';
 
 			fnc_change = document.getElementById('fnc_change');
-			fnc_change.innerHTML = "<form><input type='number' id='change_width' maxLength='3' min='1' max='999' onChange='change_function(this, type_border)'><br><select id='change_border' onChange='change_function(this, type_style)'><option></option><option value='solid'>Сплошная Линия</option><option value='dotted'>Тире</option><option value='dashed'>Точки</option><option value='double'>Двойная</option><option value='inset'>Тень Внутри</option><option value='outset'>Тень Снаружи</option><option value='groove'>Половина Внутри</option><option value='ridge'>Половина Снаружи</option></select></br><input type='button' id='changed_button' onClick='myChange()' value='Применить'></form>";
+			fnc_change.innerHTML = "<form><input type='number' id='change_width' maxLength='3' min='1' max='999' onChange='change_function(this, type_border)'><select id='change_border' onChange='change_function(this, type_style)'><option></option><option value='solid'>Сплошная Линия</option><option value='dotted'>Тире</option><option value='dashed'>Точки</option><option value='double'>Двойная</option><option value='inset'>Тень Внутри</option><option value='outset'>Тень Снаружи</option><option value='groove'>Половина Внутри</option><option value='ridge'>Половина Снаружи</option></select><input type='button' id='changed_button' onClick='myChange()' value='Применить'></form>";
 
 			fnc_title = document.getElementById('fnc_tittle');
-			fnc_title.innerHTML = "<form><input type='text' id='title_text' value='Заголовок'></br><input type='button' onClick='myTittle()' value='Добавить'></form>";
+			fnc_title.innerHTML = "<form><input type='text' id='title_text' value='Заголовок' style='text-align: center;'><input type='button' id='tittle_button' onClick='myTittle()' value='Добавить'></form>";
 
 			fnc_remove = document.getElementById('fnc_remove');
-			fnc_remove.innerHTML = "<form><input type='number' id='remove_stroka'><br><input type='button' onClick='myRemove()' value='Удалить'></form>";
+			fnc_remove.innerHTML = "<form><input type='number' id='remove_stroka'><input type='button' onClick='myRemove()' value='Удалить'></form>";
 
 			fnc_random = document.getElementById('fnc_random');
 			fnc_random.innerHTML = "<form><button type='button' onClick='myRandom()'>Magic</button></form>"
 
 			fnc_delete = document.getElementById('fnc_delete');
-			fnc_delete.innerHTML = "<button onClick='myDelete()'>Удалить таблицу</button>"
+			fnc_delete.innerHTML = "<div><form><button id='button_delete' onClick='myDelete()'>Удалить таблицу</button></form></div>"
 
 			document.body.append(tbl);
+
+		//Style
+			var width = $("html").width();
+			$("#fnc_functions").css('width', width);
+			$("#fnc_functions td").css('width', width/4);
+			$("#fnc_functions td").css('vertical-align', 'middle');	
+			$("#fnc_functions td form").css('width', width/5);
+			$("#fnc_functions td form").css('display','flex');
+			$("#fnc_functions form").css('flex-direction','column');
+			
+			$("#fnc_random").css('float','left');
+			$("#fnc_delete").css('float','left');
+			$("#fnc_tittle input").css('height', $('#fnc_change').height()/2);
+			$("#fnc_remove input").css('height', $('#fnc_tittle').height()/2-5);
+			$("#fnc_random button").css('height', $('#fnc_remove').height()/2-10);
+			$("#fnc_delete button").css('height', $('#fnc_tittle').height()/2-10);
+			
+			$('#fnc_functions td form input').css('margin','5px 0px 5px 0px');
+			$("#fnc_functions td form input").css('text-align','center');
+			$("#fnc_functions td form input").css('font-size','17.5px');
+			$("#fnc_functions td form button").css('font-size','17.5px');
+			$("#fnc_functions td form select").css('font-size','17.5px');
+			$("#fnc_functions td form select").css('text-align-last','center');
+
+			$("#tbl").css('text-align','center');
+			$("#tbl").css('font-family','Arial');
+			$("#tbl tr").css('height','50px');
+			$("#tbl tr td form").css('margin','0px');
+			$(".td_num").css('width','24px');
+			$(".td_num").css('font-size','24px');
+			$(".num_td").css('width', width/12);
+			$(".num_td").css('padding','3px');
+			$(".text_form").css('width', width/12);
+			$(".text_form").css('margin', '3px');
+			$(".button_form").css('width', width/12);
+			$(".button_form").css('font-size', '13px');
+
+			$("#tbl").css('left','50%');
+			$("#tbl").css('top','50%');
+			margin_top = (-($("#tbl").height())/2+100) + 'px';
+			$("#tbl").css('position','fixed');
+			margin_left = (-($("#tbl").width())/2) + 'px';
+			$("#tbl").css('margin-left', margin_left);
+			$("#tbl").css('margin-top', margin_top);
 		}
 
 		function txt_btn(k) {
@@ -106,10 +146,13 @@
 			txt = btn.value;
 			$('#frm').attr('hidden','true');
 			btn_txt.innerHTML = "<p>" + txt + "</p>";
+			btn_txt.className += '_updated';
+			tbl_upd = document.getElementById('tbl');
+			tbl_upd.className = 'updated';
 		}
 
 		function tbl_txt(key_frm, key_txt, kk) {
-			let text = "<form id = '" + key_frm + "'><input type='text' id = '" + key_txt + "'><br><input type='button' value='Сохранить' onClick='txt_btn(" + kk + ")'></form>";
+			let text = "<form id = '" + key_frm + "'><input type='text' id = '" + key_txt + "' class='text_form'><br><input type='button' class='button_form' value='Сохранить' onClick='txt_btn(" + kk + ")'></form>";
 			return text;
 		}
 
@@ -161,7 +204,7 @@
 				{
 					if (change_value.includes(' ') == false)
 					{
-						change_button.value += ' ' + changed_value + ' px';;
+						change_button.value += ' ' + changed_value + ' px';
 					}
 					else
 					{
@@ -173,7 +216,12 @@
 				}				
 			}
 		}		
-
+		$('#change_width').keypress(function(e) {
+			if (e.keyCode == 13)
+			{
+				myChange();
+			}
+		})
 		function myChange() {
 			width = $('#change_width').val();
 			border = $('#change_border').val();
@@ -182,41 +230,81 @@
 				alert('Введите трехзначное число (но такое, чтобы были видны изменения)');
 				return;
 			}
-			$('td').attr('width', width);
+			$('.num_td').css('width', width);
 			$('#tbl').css('border-style', border);
 		}
 
 		function myTittle() {
-			title_text = $('#title_text').val();
-			$('#tbl').prepend('<caption>' + title_text + '</caption>');
+			tbl_tr = $("#tbl tr").length;
+			if(tbl_tr > 0)
+			{
+				title_text = $('#title_text').val();
+				if($('#tittle_button').attr('class') != 'updated')
+				{
+					$('#tbl').prepend('<caption id="Caption" style="font-size: 35.5px; margin-bottom: 17.5px" >' + title_text + '</caption>');
+					$('#tittle_button').attr('class','updated');					
+				}
+				else
+				{
+					$('#Caption').html(title_text);
+				}
+			}
+			else
+			{
+				alert("Таблицы не существует! Какой заголовок?");
+			}
 		}
+		$('#title_text').keypress(function(e) {
+			if (e.keyCode == 13)
+			{
+				myTitle();
+			}
+		});
 
 		function myRemove() {
 			remove_stroka = $('#remove_stroka').val();
-			if($('td').is('#'+ remove_stroka) == false)
+			if(($('#'+ remove_stroka).is('tr')) != false)
+			{
+				$("#"+ remove_stroka).remove();
+			}
+			else
 			{
 				alert('Введено неверное число: данной строки не существует');
 				return;
 			}
-			$("#"+ remove_stroka).remove();
+			if($('#tbl td').length == 0)
+			{
+				alert('Вы удалил всю таблицу!');
+			}
 		}
+		$('#remove_stroka').keypress(function(e) {
+			if (e.keyCode == 13)
+			{
+				myRemove();
+			}
+		});
 
 		function myRandom() {
-			col_td = $('#tbl td').length;
-			col_tr = $('#tbl tr').length;
-			col_td = col_td/col_tr;
-			rnd_tr = getRandomInt(1,col_tr);
-			rnd_td = getRandomInt(1,col_td);
-			tr_rnd = rnd_tr.toString();
-			td_rnd = rnd_td.toString();
-			rnd_tbl = tr_rnd + td_rnd;
-			tbl_rnd = '#'+'tbl'+ rnd_tbl;
+			tbl_rnd = getRandomTable();
+
+			if($("#tbl").attr('class') == 'updated')
+			{
+				while ($(tbl_rnd).attr('class') != 'num_td_updated')
+				{
+					tbl_rnd = getRandomTable();
+				}					
+			}
+			else
+			{
+				alert('Запишите в таблицу хоть что-нибудь!');
+				return;
+			}
 
 			text_color = getRandomColor();
 			color = getRandomColor();
 			$(tbl_rnd).css('background-color', color);
 			$(tbl_rnd).css('color', text_color);
-
+			
 			text = getRandomInt(15,25);
 			if (text == 25)
 			{
@@ -224,7 +312,9 @@
 				key_txt = 'txt'+ rnd_tbl;
 				kk = rnd_tbl;
 				txt_tbl = tbl_txt(key_frm, key_txt, kk);
-				$(tbl_rnd).html(txt_tbl);			
+				$(tbl_rnd).html(txt_tbl);
+				$(tbl_rnd).attr('class','num_td');
+				$("#tbl").removeAttr('class');
 			}
 			else
 			{
@@ -232,41 +322,103 @@
 				$(tbl_rnd).css('font-size', font_size);				
 			}
 
+			function getRandomTable()
+			{
+				col_td = $('#tbl td').length;
+				col_tr = $('#tbl tr').length;
+				if(col_td==0 || col_tr==0)
+				{
+					alert('Таблицы не существует. А тебя?');
+					return;
+				}
+
+				var numbers = [];
+				$("tr").each(function(index, element){
+					numbers.push($(this).prop('id'));
+				});
+				
+				col_td = (col_td-col_tr)/col_tr;
+				rnd_td = getRandomInt(1,col_td);
+				rnd_tr = numbers[Math.floor((Math.random()*numbers.length)+0)];
+
+				tr_rnd = rnd_tr.toString();
+				td_rnd = rnd_td.toString();
+				rnd_tbl = tr_rnd + td_rnd;
+				tbl_rnd = '#'+'tbl'+ rnd_tbl;
+				return tbl_rnd;
+			}
+			
+			function getRandomColor() {
+				color = Math.round(255.0*Math.random());
+				r = color.toString(16);
+				color = Math.round(255.0*Math.random());
+				g = color.toString(16);
+				color = Math.round(255.0*Math.random());
+				b = color.toString(16);
+				color = "#" + r+g+b;
+				return color;
+			}
+			
+			function getRandomInt(min,max) {
+				return Math.floor(Math.random()*(max+1-min))+min;
+			}
 		}
 
 		function myDelete() {
 			$('#tbl').remove();
-			//$('#Table').show();
-			alert(kk);
-			//$('#Table').attr('hidden','false')
 			$('#fnc_functions').attr('hidden','true');
 		}
-
-		function getRandomInt(min,max) {
-			return Math.floor(Math.random()*(max+1-min))+min;
-		}
-
-		function getRandomColor() {
-			color = Math.round(255.0*Math.random());
-			r = color.toString(16);
-			color = Math.round(255.0*Math.random());
-			g = color.toString(16);
-			color = Math.round(255.0*Math.random());
-			b = color.toString(16);
-			color = "#" + r+g+b;
-			return color;
-		}
 	</script>
-
 </body>
 
 <style>
 	#Table {
 		position: fixed;
+		width: 500px;
+		height: 248px;
 		top: 50%;
-		margin-top: - 50%;
+		margin-top: -124px;
 		left: 50%;
-		margin-left: - 50%;
+		margin-left: -248px;
 		text-align: center;
+		font-family: 'Arial';
+		z-index: 1;
+	}
+
+	#Table table
+	{
+		border: 3px solid black;
+		width: 500px;
+		border-top: white;
+		font-size: 24px;
+		margin-top: -37px;
+		padding-top: 39px;
+		margin-bottom: -46px;
+		padding-bottom: 48px;
+		border-radius: 24px;
+		z-index: 2;
+	}
+
+	#Table .col
+	{
+		width: 300px;
+		padding-left: 25px;
+	}
+
+	#Table input
+	{
+		text-align: center;
+		font-size: 17.5px;
+	}
+
+	#Table .num
+	{
+		padding-left: 11px;
+	}
+
+	#Table_button
+	{
+		width: 125px;
+		height: 50px;
 	}
 </style>
